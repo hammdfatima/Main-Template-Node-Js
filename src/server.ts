@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-// import helmet from "helmet";
+import helmet from "helmet";
 import morgan from "morgan";
 import errorHandle from "~/middlewares/error-handler";
 import logger from "~/lib/logger";
@@ -11,28 +11,27 @@ import { createServer } from "http";
 //import { socketHandler } from "~/lib/socket";
 import swaggerDocs from "~/utils/swagger";
 import prisma from "./lib/db";
+import { limiter } from "./middlewares/rate-limiter";
 
 const app = express();
-app.use(cors());
+
 const server = createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: "*",
-//   },
-// });
-// Socket.io handler
 
-//socketHandler(io);
+app.use(cors());
 
-// Middleware
+app.use(limiter);
 
-// app.use(
-//   helmet({
-//     crossOriginResourcePolicy: {
-//       policy: "cross-origin",
-//     },
-//   }),
-// );
+app.use(
+  helmet({
+    frameguard: { action: "deny" }, // Prevent click jacking
+    referrerPolicy: { policy: "no-referrer" }, // Hide referrer information
+    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true }, //HSTS header to force the use of HTTPS.
+    noSniff: true, //Prevent Sniffing of MIME Types
+  }),
+);
+
+app.disable("x-powered-by"); //reduce fingerprinting
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
