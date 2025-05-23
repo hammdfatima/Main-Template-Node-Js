@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn -r tsconfig-paths/register src/server.ts",
-    "build": "npx @biomejs/biome lint ./src && tsc -p tsconfig.json  && tsc-alias",
+    "dev": "nodemon --watch src --ext ts,json --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "build": "npx @biomejs/biome lint ./src && tsc -p tsconfig.json && tsc-alias",
     "lint": "npx @biomejs/biome lint ./src",
     "start": "node dist/server.js"
   },
@@ -24,6 +24,7 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
     "@types/node": "^15.14.9",
+    "nodemon": "^3.1.10",
     "prisma": "^6.2.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
@@ -46,6 +47,7 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.5.0",
     "helmet": "^7.1.0",
+    "http-status": "^2.1.0",
     "ioredis": "^5.4.2",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
