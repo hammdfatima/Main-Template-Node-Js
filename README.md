@@ -17,3 +17,11 @@ throw new HttpError("Some Message", 400);
 Type aliases are defined in tsconfig.json for more information check tsconfig.json.
 ## Logger 
 Morgan is used as the default logger for logging every incoming request. Additionally, there is a logger file in **lib/logger**. You can use this logger and customize the log colors according to your needs.
+
+## Http-status
+The http-status package is used to provide readable and standardized HTTP status codes and messages, reducing the need to remember exact numeric values. This improves code readability and helps prevent errors due to incorrect status codes.
+
+```typescript
+throw new HttpError("Invalid user input", StatusCodes.BAD_REQUEST);
+```
+you can read about it in detail [here](https://www.npmjs.com/package/http-status)
